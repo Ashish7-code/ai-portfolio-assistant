@@ -80,3 +80,19 @@ def analyze_github_profile(username: str):
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+from roadmap_generator import generate_roadmap
+from pydantic import BaseModel as PydanticBase
+from typing import List
+
+class RoadmapRequest(PydanticBase):
+    skill_gaps: List[str]
+    target_role: str = "Software Engineer"
+
+@router.post("/roadmap/generate")
+def create_roadmap(request: RoadmapRequest):
+    try:
+        result = generate_roadmap(request.skill_gaps, request.target_role)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
