@@ -16,7 +16,8 @@ export default function GithubPage() {
     setError('');
     setRoadmap(null);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/github/analyze/${username}`);
+      const cleanUsername = username.trim().replace(/[^a-zA-Z0-9-]/g, "");
+      const res = await fetch(`http://127.0.0.1:8000/github/analyze/${cleanUsername}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Something went wrong');
       setGithubResult(data);
@@ -73,8 +74,8 @@ export default function GithubPage() {
             <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
               <h2 className="text-xl font-semibold mb-3">Top Languages</h2>
               <div className="flex flex-wrap gap-2">
-                {githubResult.top_languages.map((lang: string) => (
-                  <span key={lang} className="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">{lang}</span>
+                {githubResult.top_languages.map((lang: string, idx: number) => (
+                  <span key={idx} className="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">{lang}</span>
                 ))}
               </div>
             </div>
