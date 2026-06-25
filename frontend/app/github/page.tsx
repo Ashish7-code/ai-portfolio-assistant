@@ -17,13 +17,13 @@ export default function GithubPage() {
     setRoadmap(null);
     try {
       const cleanUsername = username.trim().replace(/[^a-zA-Z0-9-]/g, "");
-      const res = await fetch(`http://127.0.0.1:8000/github/analyze/${cleanUsername}`);
+      const res = await fetch(`https://ai-portfolio-assistant-kf58.onrender.com/github/analyze/${cleanUsername}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Something went wrong');
       setGithubResult(data);
 
       // Auto-generate roadmap from skill gaps
-      const roadmapRes = await fetch('http://127.0.0.1:8000/roadmap/generate', {
+      const roadmapRes = await fetch('https://ai-portfolio-assistant-kf58.onrender.com/roadmap/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ skill_gaps: data.skill_gaps, target_role: 'Software Engineer' }),

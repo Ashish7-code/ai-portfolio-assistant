@@ -16,7 +16,7 @@ export default function ResumePage() {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const res = await fetch('http://127.0.0.1:8000/resume/analyze', {
+      const res = await fetch('https://ai-portfolio-assistant-kf58.onrender.com/resume/analyze', {
         method: 'POST',
         body: formData,
       });
